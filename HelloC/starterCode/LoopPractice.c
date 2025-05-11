@@ -85,3 +85,14 @@ int main() {
     whileLoopMenu();
     return 0;
 }
+
+
+int addTwo(int one, int two){
+    return one +two;
+} ///end addTwo
+
+int main(){
+    int x=addTwo(10,32);
+    printf("%d\n",x);
+    return 0;
+}  //end main
