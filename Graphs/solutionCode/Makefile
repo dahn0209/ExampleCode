@@ -2,7 +2,7 @@
 CC = gcc
 CFLAGS = -Wall
 
-SHARED_SRCS = 
+SHARED_SRCS = GraphReader.c
 
 ADJ_MATRIX_TARGET = matrixTest.out
 ADJ_MATRIX_SRCS = 
