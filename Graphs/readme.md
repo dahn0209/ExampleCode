@@ -24,7 +24,7 @@ To generate the help message and see the options
 $ ./dag-generate.py -h
 ```
 
-> [!NOTE]
+> [!NOTE]  
 > Windows clients will need to include `python` in front of the script so `python dag-generate.py > 10Random.txt`.
 > Mac or Linux you may need to add the +x permission, or use `python3` in front
 > of the script.
