@@ -112,7 +112,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Generate a Directed Acyclic Graph (DAG) with custom parameters.')
     parser.add_argument('--type', choices=['random', 'layered'], default='random',
                         help='Type of DAG to generate (default: random)')
-    parser.add_argument('--vertices', default=10, type=int, help='Number of vertices in the graph')
+    parser.add_argument('--vertices', default=10, type=int, help='Number of vertices in the graph (default: 10)')
     parser.add_argument('--min-weight', type=int, default=1, help='Minimum edge weight (default: 1)')
     parser.add_argument('--max-weight', type=int, default=10, help='Maximum edge weight (default: 10)')
     parser.add_argument('--connectivity', default=0.5, type=float, help='Probability of edge existence (0.0 to 1.0)')
