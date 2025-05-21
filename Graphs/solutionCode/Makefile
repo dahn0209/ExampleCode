@@ -8,10 +8,10 @@ ADJ_MATRIX_TARGET = matrixTest.out
 ADJ_MATRIX_SRCS = adjMatrix.c testAdjMatrix.c
 
 ADJ_LIST_TARGET = listTest.out
-ADJ_LIST_SRCS = 
+ADJ_LIST_SRCS = adjList.c testAdjList.c
 
 TRAVERSAL_TARGET = traversalTest.out
-TRAVERSAL_SRCS = 
+TRAVERSAL_SRCS = $(ADJ_LIST_SRCS) traversal.c testTraversal.c
 
 all: amatrix alist traversal
 
