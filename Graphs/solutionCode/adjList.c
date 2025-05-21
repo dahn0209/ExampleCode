@@ -14,7 +14,6 @@
 
 
 
-#include "adjList.h"
 
 /**
  * Creates a new adjacency list graph with the given capacity.
@@ -23,8 +22,25 @@
  * @return A pointer to the newly created AdjListGraph.
  */
 AdjListGraph* createGraph(int capacity, bool directed) {
-    //TODO: Implementation
-    return NULL;
+    DEBUG_PRINT(DEBUG_INFO, "Creating graph with capacity %d\n", capacity);
+    AdjListGraph* graph = (AdjListGraph*)malloc(sizeof(AdjListGraph));
+    if (graph == NULL) {
+        fprintf(stderr, "Memory allocation failed for graph.\n");
+        exit(EXIT_FAILURE);
+    }
+    graph->numVertices = 0;
+    graph->capacity = capacity;
+    graph->directed = directed;
+    graph->adjList = (AdjListNode**)malloc(capacity * sizeof(AdjListNode*));
+    if (graph->adjList == NULL) {
+        fprintf(stderr, "Memory allocation failed for adjacency list.\n");
+        free(graph);
+        exit(EXIT_FAILURE);
+    }
+    for (int i = 0; i < capacity; i++) {
+        graph->adjList[i] = NULL;
+    }
+    return graph;
 }
 
 /**
@@ -32,7 +48,19 @@ AdjListGraph* createGraph(int capacity, bool directed) {
  * @param graph A pointer to the AdjListGraph to free.
  */
 void freeGraph(AdjListGraph* graph) {
-    //TODO: Implementation
+    if (graph == NULL) {
+        return;
+    }
+    for (int i = 0; i < graph->numVertices; i++) {
+        AdjListNode* current = graph->adjList[i];
+        while (current != NULL) {
+            AdjListNode* temp = current;
+            current = current->next;
+            free(temp);
+        }
+    }
+    free(graph->adjList);
+    free(graph);
 }
 
 /**
@@ -66,7 +94,38 @@ void __resizeGraph(AdjListGraph* graph) {
  * @param weight The weight of the edge.
  */
 void addEdge(AdjListGraph* graph, int src, int dest, int weight) {
-    //TODO: Implementation
+    if (src < 0  ||  dest < 0 ) {
+        fprintf(stderr, "Vertex index out of bounds.\n");
+        return;
+    }
+    graph->numVertices = (src >= graph->numVertices) ? src + 1 : graph->numVertices;
+    graph->numVertices = (dest >= graph->numVertices) ? dest + 1 : graph->numVertices;
+
+    if (graph->numVertices >= graph->capacity) {
+        __resizeGraph(graph);
+    }
+    AdjListNode* newNode = (AdjListNode*)malloc(sizeof(AdjListNode));
+    if (newNode == NULL) {
+        fprintf(stderr, "Memory allocation failed for new node.\n");
+        exit(EXIT_FAILURE);
+    }
+    newNode->vertex = dest;
+    newNode->weight = weight;
+    newNode->next = graph->adjList[src];
+    graph->adjList[src] = newNode;
+
+    if (!graph->directed) {
+        // Add the edge in the opposite direction for undirected graphs
+        AdjListNode* reverseNode = (AdjListNode*)malloc(sizeof(AdjListNode));
+        if (reverseNode == NULL) {
+            fprintf(stderr, "Memory allocation failed for reverse node.\n");
+            exit(EXIT_FAILURE);
+        }
+        reverseNode->vertex = src;
+        reverseNode->weight = weight;
+        reverseNode->next = graph->adjList[dest];
+        graph->adjList[dest] = reverseNode;
+    }
 }
 
 /**
@@ -76,8 +135,17 @@ void addEdge(AdjListGraph* graph, int src, int dest, int weight) {
  * @return The degree of the vertex.
  */
 int getDegree(AdjListGraph* graph, int vertex) {
-    //TODO: Implementation
-    return 0;
+    if (vertex < 0 || vertex >= graph->numVertices) {
+        fprintf(stderr, "Vertex index out of bounds.\n");
+        return -1;
+    }
+    int degree = 0;
+    AdjListNode* current = graph->adjList[vertex];
+    while (current != NULL) {
+        degree++;
+        current = current->next;
+    }
+    return degree;
 }
 
 /**
@@ -87,8 +155,24 @@ int getDegree(AdjListGraph* graph, int vertex) {
  * @return A pointer to an array of neighbor vertex indices (caller must free).
  */
 int* getNeighbors(AdjListGraph* graph, int vertex) {
-    //TODO: Implementation
-    return NULL;
+    if (vertex < 0 || vertex >= graph->numVertices) {
+        fprintf(stderr, "Vertex index out of bounds.\n");
+        return NULL;
+    }
+    int degree = getDegree(graph, vertex);
+    int* neighbors = (int*)malloc(degree * sizeof(int));
+    if (neighbors == NULL) {
+        fprintf(stderr, "Memory allocation failed for neighbors array.\n");
+        return NULL;
+    }
+    AdjListNode* current = graph->adjList[vertex];
+    for (int i = 0; i < degree; i++) {
+        if (current != NULL) {
+            neighbors[i] = current->vertex;
+            current = current->next;
+        }
+    }
+    return neighbors;
 }
 
 /**
@@ -99,8 +183,18 @@ int* getNeighbors(AdjListGraph* graph, int vertex) {
  * @return The weight of the edge, or 0 if no edge exists.
  */
 int getWeight(AdjListGraph* graph, int src, int dest) {
-    //TODO: Implementation
-    return 0;
+    if (src < 0 || src >= graph->numVertices || dest < 0 || dest >= graph->numVertices) {
+        fprintf(stderr, "Vertex index out of bounds.\n");
+        return 0;
+    }
+    AdjListNode* current = graph->adjList[src];
+    while (current != NULL) {
+        if (current->vertex == dest) {
+            return current->weight;
+        }
+        current = current->next;
+    }
+    return 0; // No edge exists
 }
 
 /**
@@ -130,5 +224,21 @@ void printGraph(AdjListGraph* graph) {
  * @param filename The name of the file to load from.
  */
 void loadFromFile(AdjListGraph* graph, const char* filename) {
-    //TODO: Implementation
+    GraphReader* reader = reader_open(filename);
+    if (reader == NULL) {
+        fprintf(stderr, "Failed to open file: %s\n", filename);
+        return;
+    }
+
+    int* line;
+    while ((line = reader_next(reader)) != NULL) {
+        int src = line[0];
+        int dest = line[1];
+        int weight = line[2];
+        DEBUG_PRINT(DEBUG_INFO, "Adding edge from %d to %d with weight %d\n", src, dest, weight);
+        addEdge(graph, src, dest, weight);
+    }
+
+    reader_close(reader);
+    
 }

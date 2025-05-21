@@ -81,7 +81,7 @@ void __resizeGraph(AdjMatrixGraph* graph) {
  * @param weight The weight of the edge.
  */
 void addEdge(AdjMatrixGraph* graph, int src, int dest, int weight) {
-    if (src < 0 || dest < 0 || src >= graph->capacity || dest >= graph->capacity) {
+    if (src < 0 || dest < 0) {
         fprintf(stderr, "Error: Vertex out of bounds\n");
         return;
     }

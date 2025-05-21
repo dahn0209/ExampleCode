@@ -1,5 +1,5 @@
 /**
- *  File to test the adjacency matrix implementation
+ *  File to test the adjacency list implementation
  *  of a graph.
  **/
 
@@ -7,10 +7,10 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "adjMatrix.h"
+#include "adjList.h"
 #include "debug.h"
 
-void getDegreesAndTime(AdjMatrixGraph *graph) {
+void getDegreesAndTime(AdjListGraph *graph) {
   clock_t start = clock();
   for (int i = 0; i < graph->numVertices; i++) {
     int degree = getDegree(graph, i);
@@ -21,7 +21,7 @@ void getDegreesAndTime(AdjMatrixGraph *graph) {
   printf("Time taken to get degrees: %f seconds\n", time_spent);
 }
 
-void getWeightAndTime(AdjMatrixGraph *graph) {
+void getWeightAndTime(AdjListGraph *graph) {
   clock_t start = clock();
   for (int i = 0; i < graph->numVertices; i++) {
     int src = rand() % graph->numVertices;
@@ -33,7 +33,7 @@ void getWeightAndTime(AdjMatrixGraph *graph) {
   printf("Time taken to get weight: %f seconds\n", time_spent);
 }
 
-void loadAndTime(AdjMatrixGraph *graph, const char *filename) {
+void loadAndTime(AdjListGraph *graph, const char *filename) {
   clock_t start = clock();
   loadFromFile(graph, filename);
   clock_t end = clock();
@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
   }
 
   const char *filename = argv[1];
-  AdjMatrixGraph *graph = createGraph(10000, true);
+  AdjListGraph *graph = createGraph(10000, true);
   if (graph == NULL) {
     fprintf(stderr, "Failed to create graph\n");
     return EXIT_FAILURE;
