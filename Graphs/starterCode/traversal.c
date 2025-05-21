@@ -70,15 +70,15 @@ void freeTraversalTable(TraversalTable* table) {
 void printTraversalInfo(TraversalTable* table, bool isDFS) {
     if (isDFS) {
         printf("DFS Traversal:\n");
-        printf("Vertex\tDiscovery\tFinish\tPrevious\n");
+        printf("Vertex  Discovery  Finish  Previous\n");
         for (int i = 0; i < table->numVertices; i++) {
-            printf("%d\t%d\t%d\t%d\n", i, table->info[i].discovery, table->info[i].finish, table->info[i].previous);
+            printf("%-7d %-10d %-7d %-8d\n", i, table->info[i].discovery, table->info[i].finish, table->info[i].previous);
         }
     } else {
         printf("BFS Traversal:\n");
-        printf("Vertex\tDistance\tPrevious\n");
+        printf("Vertex  Distance  Previous\n");
         for (int i = 0; i < table->numVertices; i++) {
-            printf("%d\t%d\t%d\n", i, table->info[i].distance, table->info[i].previous);
+            printf("%-7d %-9d %-8d\n", i, table->info[i].distance, table->info[i].previous);
         }
     }
 }
