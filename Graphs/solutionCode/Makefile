@@ -2,10 +2,10 @@
 CC = gcc
 CFLAGS = -Wall
 
-SHARED_SRCS = GraphReader.c
+SHARED_SRCS = GraphReader.c debug.c
 
 ADJ_MATRIX_TARGET = matrixTest.out
-ADJ_MATRIX_SRCS = adjMatrix.c
+ADJ_MATRIX_SRCS = adjMatrix.c testAdjMatrix.c
 
 ADJ_LIST_TARGET = listTest.out
 ADJ_LIST_SRCS = 
