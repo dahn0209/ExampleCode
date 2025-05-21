@@ -39,6 +39,7 @@ void freeGraph(AdjMatrixGraph* graph) {
   * @param graph A pointer to the AdjMatrixGraph.
 **/
 void __resizeGraph(AdjMatrixGraph* graph) {
+    DEBUG_PRINT(DEBUG_INFO, "Resizing graph from %d to %d\n", graph->capacity, graph->capacity * SCALE_FACTOR);
     int newCapacity = graph->capacity * SCALE_FACTOR;
     int* newAdjMatrix = (int*)malloc(newCapacity * newCapacity * sizeof(int));
     if (newAdjMatrix == NULL) {
