@@ -1,4 +1,4 @@
-# Sorted Graphs
+# Graphs
 
 Code for code alongs.
 
