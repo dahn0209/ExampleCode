@@ -74,10 +74,5 @@ int main() {
     printBook(&book1);
     updateBookTitle(&book1, "The Great Gatsby (Updated Edition)");
     printBook(&book1);
-
-
-
-
-
     return 0;
 }

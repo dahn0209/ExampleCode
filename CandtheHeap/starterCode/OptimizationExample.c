@@ -24,7 +24,8 @@ void printArray(int *arr, int size) {
 
 bool isPrime(int x) {
     if (x <= 1) return false;
-    for (int i = 2; i < sqrt(x) + 1; i++) {
+    int max=sqrt(x) + 1;;
+    for (int i = 2; i < max; i++) {
         if (x % i == 0) return false;
     }
     return true;
