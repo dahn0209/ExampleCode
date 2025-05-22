@@ -65,8 +65,34 @@ void removeBook(ReadingList *readingList, int index) {
   readingList->current--;
 }
 
+void loadBooksFromFile(const char* filename, ReadingList *readingList){
+  FILE *file=fopen(filename,"r");
+  if(file== NULL){
+      printf("Error opening file\n");
+      return;
+  }
+  char line[256];
+  int lineOne=1;
+  while(fgets(line, sizeof(line), file)){
+    if (lineOne) {
+      lineOne = 0;
+      continue;
+    }
+    char *author = strtok(line, ",");
+    char *title = strtok(NULL, ",");
+    int year = atoi(strtok(NULL, ","));
+  
+    addBook(readingList, author, title, year);
+
+  }
+  fclose(file);
+}
+
 int main() {
-  ReadingList *myList = createReadingList(10);
+  ReadingList *myList = createReadingList(100);
+
+  loadBooksFromFile("Books.csv", myList);
+
 
   // addBook(myList, "Brandon Sanderson", "Mistborn: The Final Empire", 2006);
   // addBook(myList, "Frank Herbert", "Dune", 1965);
@@ -74,8 +100,8 @@ int main() {
 
   printReadingList(myList);
   printf("\n");
-  // removeBook(myList, 1);
-  // printReadingList(myList);
+  removeBook(myList, 6);
+  printReadingList(myList);
 
   freeReadingList(myList);
   return 0;
