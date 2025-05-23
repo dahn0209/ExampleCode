@@ -6,6 +6,11 @@ Code for code alongs.
 * solutionCode - provides solution files for each code along
 
 
+> [!IMPORTANT]
+> The code along talks about a 10000sample file. This file
+> was too large to store on github, so you will want to generate one yourself
+> if you want to run the test. 
+
 ## Generating Sample Data
 
 You can generate sample data by running the `dag-generate.py` script in the samples directory. 
@@ -16,7 +21,7 @@ Examples:
 $ ./dag-generate.py > 10Random.txt
 ```
 ```console
-$ ./dag-generate.py --vertices 100 > 100Random.txt
+$ ./dag-generate.py --vertices 10000 > 10000Random.txt
 ```
 
 To generate the help message and see the options
