@@ -20,16 +20,18 @@ typedef struct {
 } GameState;
 
 
-GameState* initializeGameState(int maxAttempts, int playerType, int min, int max);
-void freeGameState(GameState *gameState);
+
 
 int getRandomNumber(int min, int max);
-int getInput(void);
 bool runGame(int randomNumber, GameState *gameState);
+GameState* initializeGameState(int maxAttempts, int playerType, int min, int max);
+void freeGameState(GameState *gameState);
 void giveFeedback(int randomNumber, bool found, GameState *gameState);
+int getInput(void);
+void feedback(int state); //prints too high or too low//
 void start(void);
 
-void feedBack(int state); //prints too high or too low//
+void feedback(int state); //prints too high or too low//
 
 
 #endif // GUESSINGAME_H
