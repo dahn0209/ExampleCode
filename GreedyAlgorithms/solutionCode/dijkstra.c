@@ -171,6 +171,8 @@ void dijkstra(AdjListGraph *graph, int src, int *dist, int *prev) {
   NeuHeap *minHeap = __createHeap(graph->numVertices);
 
   // Insert all vertices into the min heap
+  // we track the nodes, so we can have direct access to 
+  // update the distance instead of having to search for the node
   NeuHeapNode *nodes[graph->numVertices];
   for (int i = 0; i < graph->numVertices; i++) {
     nodes[i] = __heapInsert(minHeap, i, dist[i]);
