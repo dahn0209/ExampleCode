@@ -189,7 +189,7 @@ void dijkstra(AdjListGraph *graph, int src, int *dist, int *prev) {
  */
 void printPath(int dest, int *prev, int V) {
   // Create a temporary array to store the path
-  int path[V]; // Assumes at most 100 vertices in path
+  int path[V]; 
   int pathLength = 0;
 
   // First, collect the path in reverse order
