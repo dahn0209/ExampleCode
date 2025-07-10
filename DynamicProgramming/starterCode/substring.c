@@ -14,15 +14,77 @@ int _debug = 0;
 
 enum { TABULATION = 2, NO_TABULATION = 1 };
 
+char *get_substring(int max_len, int end_index, const char *str_one) {
+  if (max_len <= 0 || end_index <= 0) {
+    return NULL; // No common substring found
+  }
+  char *result = (char *)malloc((max_len + 1) * sizeof(char));
+  if (!result) {
+    fprintf(stderr, "Memory allocation failed\n");
+    return NULL;
+  }
+  strncpy(result, str_one + end_index - max_len, max_len);
+  result[max_len] = '\0';
+  return result;
+}
+
 char *longest_common_substring_no_tabulation(const char *str_one,
                                              const char *str_two) {
+  int len1=strlen(str_one);   
+  int len2=strlen(str_two);  
+  int max_len=0;       
+  int end_index=0;      
 
-  return NULL;
+  for(int i=0;i<len1;i++){
+    for(int j=0;j<len2;j++){
+      int k=0;
+      while(i+k<len1&& j+k<len2 && str_one[i+k]==str_two[j+k]){
+        k++;   
+      }
+      if(k>max_len){
+        max_len=k;
+        end_index=i+k;
+      } 
+    
+    }  
+  }                     
+                                 
+
+  return get_substring(max_len,end_index,str_one);
 }
 
 char *longest_common_substring_with_tabulation(const char *str_one,
                                                const char *str_two) {
-  return NULL;
+  int len1=strlen(str_one);   
+  int len2=strlen(str_two);  
+  int max_len=0;       
+  int end_index=0; 
+
+  int dp[len1+1][len2+1];
+  memset(dp,0,sizeof(dp));
+
+    for(int i=1;i<=len1;i++){
+    for(int j=1;j<=len2;j++){
+
+      if(str_one[i-1]==str_two[j-1]){
+        dp[i][i]=dp[i-1][j-1]+1;
+        if(dp[i][j]>max_len){
+          max_len=dp[i][j];
+          end_index=i;
+        }
+      }
+    
+    }  
+  }  
+
+  if (_debug)
+    printMatrix((int *)dp, len2 + 1, len1 + 1); // Print the dp array
+
+
+  return get_substring(max_len,end_index,str_one);
+
+
+
 }
 
 int time_substring(char *(*func)(const char *, const char *),

@@ -17,23 +17,38 @@ enum {
   FIBO_BOTH = FIBO_RECURSIVE | FIBO_MEMOIZATION
 };
 
-int fibonacci_recursive(int n) { return 0; }
+uint64_t fibonacci_recursive(int n) { 
+  if(n<=1){
+    return n;
+  }
+  return fibonacci_recursive(n-1)+fibonacci_recursive(n-2); 
+  
+}
 
-int fibonacci_memoization(int n, int *memo) { return 0; }
+uint64_t fibonacci_memoization(int n, uint64_t *memo) { 
+  if(n<=1){
+    memo[n]=n;
+  }
+  if(memo[n]!=0 || n==0){
+    return memo[n];
+  }
+  memo[n]=fibonacci_memoization(n-1,memo)+fibonacci_memoization(n-2,memo);
+  return memo[n]; 
+}
 
 int time_fibonacci_recursive(int n) {
   clock_t start = clock();
-  int result = fibonacci_recursive(n);
+  uint64_t result = fibonacci_recursive(n);
   clock_t end = clock();
   printf("Fibonacci(%d) = %ld\n", n, result);
   return (int)(end - start);
 }
 
 int time_fibonacci_memoization(int n) {
-  int *memo = (int *)malloc((n + 1) * sizeof(int));
+  uint64_t *memo = (uint64_t *)malloc((n + 1) * sizeof(uint64_t));
   memset(memo, 0, (n + 1) * sizeof(int)); // Initialize memo array to 0
   clock_t start = clock();
-  int result = fibonacci_memoization(n, memo);
+  uint64_t result = fibonacci_memoization(n, memo);
   clock_t end = clock();
   printf("Fibonacci(%d) = %ld\n", n, result);
   free(memo); // Free the allocated memory for memo array

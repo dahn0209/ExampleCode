@@ -56,6 +56,13 @@ void test_enqueue_dequeue() {
     // now test actual memory locations, underscores are used when there is nothing in that location
     printf("Showing memory locations...\n");
     print_queue_memory(queue); // Print the memory locations of the queue elements
+    enqueue(queue,10);
+    print_queue_memory(queue);
+    dequeue(queue);
+    dequeue(queue);
+    print_queue_memory(queue);
+    dequeue(queue);
+
 
 
 

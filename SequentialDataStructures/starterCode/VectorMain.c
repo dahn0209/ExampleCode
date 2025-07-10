@@ -28,6 +28,7 @@ void test_add_elements() {
     } else {
         printf("Test failed: Elements not added correctly. %s\n", actual);
     }
+    // print_vector(vector);
     free((char *) actual); // Free the string representation
     free_vector(vector); // Free the vector
 }
@@ -43,6 +44,7 @@ void test_remove_elements() {
     } else {
         printf("Test failed: Element not removed correctly.\n");
     }
+    // print_vector(vector);
     free_vector(vector); // Free the vector
 }
 
@@ -50,6 +52,7 @@ void test_pop_elements() {
     NeuVector* vector = create_vector(5); // Create a vector with initial capacity of 5
     printf("Adding elements 0 to 9...\n");
     add_elements(vector, 0, 10);
+    // print_vector(vector);
     printf("Popping element...\n");
     int popped_element = pop_vector_element(vector);
     if (popped_element == 9 && vector->size == 9) {
@@ -57,6 +60,7 @@ void test_pop_elements() {
     } else {
         printf("Test failed: Element not popped correctly.\n");
     }
+    // print_vector(vector);
     free_vector(vector); // Free the vector
 }
 
@@ -71,6 +75,7 @@ void test_insert_elements() {
     } else {
         printf("Test failed: Element not inserted correctly.\n");
     }
+    // print_vector(vector);
     free_vector(vector); // Free the vector
 }
 
@@ -86,6 +91,7 @@ void test_push_elements() {
     } else {
         printf("Test failed: Element not pushed correctly.\n");
     }
+    // print_vector(vector);
     free_vector(vector); // Free the vector
 }
 
@@ -116,14 +122,13 @@ int main(int argc, char* argv[]) {
         return EXIT_SUCCESS; // Exit after speed test
     } // else run other tests
     
-    /*
+    
     test_add_elements(); // Test adding elements
     test_insert_elements(); // Test inserting elements
-    
     test_remove_elements(); // Test removing elements
     test_pop_elements(); // Test popping elements
     test_push_elements(); // Test pushing elements
-    */
+    
     return EXIT_SUCCESS;
     
 }

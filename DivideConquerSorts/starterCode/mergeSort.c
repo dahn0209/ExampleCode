@@ -67,13 +67,70 @@ def Merge(A, left, mid, right):
  *
  */
 
-void merge(int *arr, int size, int left, int mid, int right, int *swapMemory) {}
+void merge(int *arr, int left, int mid, int right, int *swapMemory) {
+  ///size in paramete was no necessary//
+  int n1=mid-left+1;//size of left subarray
+  int n2 = right - mid; //size of right subarray
+  if(_DEBUG){
+    printf("L: ");
+    printArray(arr+left,n1);
+    printf("R: ");
+    printArray(arr+mid+1,n2);
+  }
 
-void mergeSort(int *arr, int size, int left, int right, int *swapMemory) {}
+  int *L=swapMemory; //     for i = 0 to n1: L[i] = A[left + i]    // L = [0..n1],
+  int *R=swapMemory+n1; //  for j = 0 to n2: R[j] = A[mid + 1 + j]  // R = [0..n2]
+
+  memcpy(L,arr+left,sizeof(int)*n1); //copy everything into left array
+  memcpy(R,arr+mid+1,sizeof(int)*n2); //copy everything into right array
+
+  // for(int i=0;i<n1;i++){
+  //   L[i]=arr[left+1];
+  // }
+
+  int i=0;
+  int j=0;
+  int k=left;
+
+  while(i<n1 && j<n2){
+    _ms_opCount++;
+    if (L[i] <= R[j]){
+            arr[k] = L[i];
+            i++;
+    }else{
+        arr[k] = R[j];
+          j++;
+    }
+    k++;
+  }
+
+  ////copy remaining elements of L//
+  while( i < n1){
+        arr[k] = L[i];
+        i++;
+        k++;
+  }
+  ////copy remaining elements of R//
+    while(j < n2){
+        arr[k] = R[j];
+        j++;
+        k++;
+  }
+
+}
+
+void mergeSort(int *arr, int left, int right, int *swapMemory) {
+  if(left<right){
+    int mid=left+(right-left)/ 2;
+    mergeSort(arr, left, mid, swapMemory);
+    mergeSort(arr, mid+1, right, swapMemory);
+    merge(arr, left, mid, right, swapMemory);
+  }
+}
 
 void runMergeSort(int *arr, int size) {
   int swapMemory[size];
-  mergeSort(arr, size, 0, size - 1, swapMemory); // call the merge sort function
+  mergeSort(arr, 0, size - 1, swapMemory); // call the merge sort function
 }
 
 int main(int argc, char const *argv[]) {
